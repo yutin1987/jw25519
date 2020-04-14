@@ -1,15 +1,43 @@
-const { ua2str, str2ua } = require('../TextArray');
+const {
+  convertUintArrayToString,
+  convertStringToUintArray,
+  convertStringToUTF16,
+  convertUTF16ToString,
+} = require('../TextArray');
 
-describe('Base', () => {
-  it('String <=> Uint8Array', () => {
-    const string = 'Hello world';
-    const array = new Uint8Array([72, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100]);
-    expect(str2ua(string)).toEqual(array);
-    expect(ua2str(array)).toBe(string);
+describe('String <=> Uint8Array', () => {
+  it('exchange', () => {
+    const string = 'Hello world 中文字𠮷';
+    expect(convertStringToUintArray(string)).toEqual(new Uint8Array(Buffer.from(string)));
+    expect(convertUintArrayToString(convertStringToUintArray(string))).toBe(string);
   });
 
-  it('when characters over ascii', () => {
-    const string = '中文字';
-    expect(() => str2ua(string)).toThrowError(new Error('Expected char code between 0 to 255'));
+  it('Basic Multilingual Plane (BMP)', () => {
+    for (let index = 0; index <= 0xD7FF; index += 13) {
+      const string = String.fromCharCode(index);
+      expect(convertStringToUintArray(string)).toEqual(new Uint8Array(Buffer.from(string)));
+      expect(convertUintArrayToString(convertStringToUintArray(string))).toBe(string);
+    }
+    for (let index = 0xE000; index < 0xFFFF; index += 13) {
+      const string = String.fromCharCode(index);
+      expect(convertStringToUintArray(string)).toEqual(new Uint8Array(Buffer.from(string)));
+      expect(convertUintArrayToString(convertStringToUintArray(string))).toBe(string);
+    }
+  });
+
+  it('with Supplementary Planes', () => {
+    for (let index = 0x10000; index <= 0x10FFFF; index += 23) {
+      const string = String.fromCodePoint(index);
+      expect(convertStringToUintArray(string)).toEqual(new Uint8Array(Buffer.from(string)));
+      expect(convertUintArrayToString(convertStringToUintArray(string))).toBe(string);
+    }
+  });
+});
+
+describe('String <=> Uint16Array', () => {
+  it('exchange', () => {
+    const string = 'Hello world 中文字𠮷';
+    expect(convertStringToUTF16(string)).not.toEqual(new Uint8Array(Buffer.from(string)));
+    expect(convertUTF16ToString(convertStringToUTF16(string))).toBe(string);
   });
 });

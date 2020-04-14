@@ -1,6 +1,6 @@
 const nacl = require('tweetnacl');
 const { base58 } = require('./Base');
-const { str2ua, ua2str } = require('./TextArray');
+const { convertStringToUintArray: str2ua, convertUintArrayToString: ua2str } = require('./TextArray');
 
 function keyPairFromArray(secretKey) {
   if ((Array.isArray(secretKey) || secretKey instanceof Uint8Array) === false) {
@@ -47,7 +47,7 @@ module.exports = function JSONWebSignature(secretKey) {
     }
 
     if (options.sub && options.sub !== payload.sub) {
-      throw new Error('subject invalid');
+      throw new Error('subject not matched');
     }
 
     return payload;
