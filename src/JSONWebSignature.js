@@ -1,6 +1,6 @@
 const nacl = require('tweetnacl');
 const { base58 } = require('./Base');
-const { convertStringToUintArray: str2ua, convertUintArrayToString: ua2str } = require('./TextArray');
+const { convertStringToASCII: str2ua, convertASCIIToString: ua2str } = require('./Text');
 
 function keyPairFromArray(secretKey) {
   if ((Array.isArray(secretKey) || secretKey instanceof Uint8Array) === false) {

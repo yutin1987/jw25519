@@ -1,7 +1,7 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-bitwise */
 
-function convertUintArrayToString(bytes) {
+function convertASCIIToString(bytes) {
   const chars = [];
   const { length } = bytes;
   let i = 0;
@@ -24,7 +24,7 @@ function convertUintArrayToString(bytes) {
   return String.fromCodePoint.apply(null, chars);
 }
 
-function convertStringToUintArray(string) {
+function convertStringToASCII(string) {
   const bytes = [];
   const { length } = string;
   let i = 0;
@@ -49,7 +49,7 @@ function convertStringToUintArray(string) {
   return new Uint8Array(bytes);
 }
 
-function convertUTF16ToString(bytes) {
+function convertUnicodeToString(bytes) {
   const { length } = bytes;
   const buffer = new Uint16Array(length / 2);
   let i = 0;
@@ -57,7 +57,7 @@ function convertUTF16ToString(bytes) {
   return String.fromCharCode.apply(null, buffer);
 }
 
-function convertStringToUTF16(string) {
+function convertStringToUnicode(string) {
   const { length } = string;
   const bytes = new Uint16Array(string.length);
   let i = 0;
@@ -66,8 +66,8 @@ function convertStringToUTF16(string) {
 }
 
 module.exports = {
-  convertUintArrayToString,
-  convertStringToUintArray,
-  convertUTF16ToString,
-  convertStringToUTF16,
+  convertASCIIToString,
+  convertStringToASCII,
+  convertUnicodeToString,
+  convertStringToUnicode,
 };

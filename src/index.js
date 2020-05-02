@@ -1,11 +1,11 @@
 const Base = require('./Base');
-const TextArray = require('./TextArray');
+const Text = require('./Text');
 const JSONWebSignature = require('./JSONWebSignature');
 const JSONWebSecretBox = require('./JSONWebSecretBox');
 
 module.exports = {
   Base,
-  TextArray,
+  Text,
   JSONWebSignature,
   JSONWebSecretBox,
 };
