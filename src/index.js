@@ -5,7 +5,9 @@ const JSONWebSecretBox = require('./JSONWebSecretBox');
 
 module.exports = {
   Base,
+  ...Base,
   Text,
+  ...Text,
   JSONWebSignature,
   JSONWebSecretBox,
 };
