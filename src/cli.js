@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 const nacl = require('tweetnacl');
-const { baseHex } = require('./Base');
+const { base16 } = require('./Base');
 
 const boxKeyPair = nacl.box.keyPair();
-console.log('Box PublicKey:', baseHex.pads(baseHex.encode(boxKeyPair.publicKey), 64));
-console.log('Box SecretKey:', baseHex.pads(baseHex.encode(boxKeyPair.secretKey), 64));
+console.log('Box PublicKey:', base16.encode(boxKeyPair.publicKey));
+console.log('Box SecretKey:', base16.encode(boxKeyPair.secretKey));
 
 const signKeyPair = nacl.sign.keyPair();
-console.log('Sign PublicKey:', baseHex.pads(baseHex.encode(signKeyPair.publicKey), 64));
-console.log('Sign SecretKey:', baseHex.pads(baseHex.encode(signKeyPair.secretKey), 128));
+console.log('Sign PublicKey:', base16.encode(signKeyPair.publicKey));
+console.log('Sign SecretKey:', base16.encode(signKeyPair.secretKey));
