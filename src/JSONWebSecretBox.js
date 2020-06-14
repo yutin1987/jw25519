@@ -1,5 +1,5 @@
 const nacl = require('tweetnacl');
-const { base58 } = require('./Base');
+const { encode32, decode32 } = require('./codec');
 
 function keyPairFromArray(secretKey) {
   if (secretKey === undefined) return nacl.box.keyPair();
@@ -25,11 +25,11 @@ module.exports = function JSONWebSecretBox(secretKey) {
     box.set(nonce);
     box.set(ciphertext, nonce.length);
 
-    return base58.encode(box);
+    return encode32(box);
   };
 
   this.decrypt = (box, publicKey) => {
-    const bytes = base58.decode(box);
+    const bytes = decode32(box);
     const nonce = bytes.slice(0, nonceLength);
     const ciphertext = bytes.slice(nonceLength, bytes.length);
     const output = nacl.box.open(ciphertext, nonce, publicKey, keyPair.secretKey);

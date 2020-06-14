@@ -1,5 +1,5 @@
 const nacl = require('tweetnacl');
-const { base58 } = require('./Base');
+const { encode32, decode32 } = require('./codec');
 const { convertStringToASCII: str2ua, convertASCIIToString: ua2str } = require('./Text');
 
 function keyPairFromArray(secretKey) {
@@ -22,11 +22,11 @@ module.exports = function JSONWebSignature(secretKey) {
     const iat = Math.floor(Date.now() / 1000);
     const input = JSON.stringify({ exp: iat + 3600, iat, ...payload });
     const signature = nacl.sign(str2ua(input), keyPair.secretKey);
-    return base58.encode(signature);
+    return encode32(signature);
   };
 
   this.verify = (signature, options = {}) => {
-    const output = nacl.sign.open(base58.decode(signature), keyPair.publicKey);
+    const output = nacl.sign.open(decode32(signature), keyPair.publicKey);
     if (output === null) throw new Error('signature invalid');
     const payload = JSON.parse(ua2str(output));
 

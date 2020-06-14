@@ -1,9 +1,9 @@
 const JWS = require('../JSONWebSignature');
-const { base16 } = require('../Base');
+const { decode16 } = require('../codec');
 
 const keyPair = {
-  publicKey: base16.decode('491394e268850f85d82a8dbff0fbb31942e9eff2fa8ad2f2964e106b2e2cb316'),
-  secretKey: base16.decode('fcaed636b35fbcf2deda7cf71ead026009afd7e3dc257df60a4c008e4d65a6b7491394e268850f85d82a8dbff0fbb31942e9eff2fa8ad2f2964e106b2e2cb316'),
+  publicKey: decode16('491394e268850f85d82a8dbff0fbb31942e9eff2fa8ad2f2964e106b2e2cb316'),
+  secretKey: decode16('fcaed636b35fbcf2deda7cf71ead026009afd7e3dc257df60a4c008e4d65a6b7491394e268850f85d82a8dbff0fbb31942e9eff2fa8ad2f2964e106b2e2cb316'),
 };
 
 describe('JSONWebSignature', () => {
@@ -37,7 +37,7 @@ describe('JSONWebSignature', () => {
 
     it('when verify failed', () => {
       const encoder = new JWS(
-        base16.decode('fcaed636b35fbcf2deda7cf71ead026009afd7e3dc257df60a4c008e4d65a6b7491394e268850f85d82a8dbff0fbb31942e9eff2fa8ad2f2964e106b2e2cb121'),
+        decode16('fcaed636b35fbcf2deda7cf71ead026009afd7e3dc257df60a4c008e4d65a6b7491394e268850f85d82a8dbff0fbb31942e9eff2fa8ad2f2964e106b2e2cb121'),
       );
 
       const code = encoder.sign({ isAdmin: true, username: 'bella' });

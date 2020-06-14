@@ -1,11 +1,11 @@
-const Base = require('./Base');
+const codec = require('./codec');
 const Text = require('./Text');
 const JSONWebSignature = require('./JSONWebSignature');
 const JSONWebSecretBox = require('./JSONWebSecretBox');
 
 module.exports = {
-  Base,
-  ...Base,
+  codec,
+  ...codec,
   Text,
   ...Text,
   JSONWebSignature,
